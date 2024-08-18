@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lz.vulapp.mapper.VulMapper">
+
+    <resultMap id="BaseResultMap" type="com.lz.vulapp.entity.Vul">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="detail" column="detail" jdbcType="VARCHAR"/>
+            <result property="ip" column="ip" jdbcType="VARCHAR"/>
+            <result property="location" column="location" jdbcType="VARCHAR"/>
+            <result property="solution" column="solution" jdbcType="VARCHAR"/>
+            <result property="level" column="level" jdbcType="VARCHAR"/>
+            <result property="priority" column="priority" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+            <result property="cve" column="cve" jdbcType="VARCHAR"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,detail,
+        level,priority,status,
+        ip,cve,created_at,
+        updated_at
+    </sql>
+    <select id="findByNameAndIp">
+        SELECT * FROM vul WHERE name = #{name} AND ip = #{ip}
+    </select>
+
+    <select id="countByStatus">
+        SELECT COUNT(*) FROM vul WHERE status = #{status}
+    </select>
+    <select id="getLevelCounts">
+        SELECT level, COUNT(*) as count FROM vul GROUP BY level;
+    </select>
+
+    <select id="getStatusCounts">
+        SELECT status, COUNT(*) as count FROM vul GROUP BY status;
+    </select>
+
+    <select id="getVulCounts">
+        SELECT name, COUNT(*) as count FROM vul GROUP BY name ORDER BY count DESC LIMIT 10;
+    </select>
+    <select id="getAllVuls">
+        SELECT * FROM vul;
+    </select>
+</mapper>

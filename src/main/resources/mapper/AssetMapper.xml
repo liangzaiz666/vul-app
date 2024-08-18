@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lz.vulapp.mapper.AssetMapper">
+
+    <resultMap id="BaseResultMap" type="com.lz.vulapp.entity.Asset">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="ip" column="ip" jdbcType="VARCHAR"/>
+            <result property="systemName" column="system_name" jdbcType="VARCHAR"/>
+            <result property="worth" column="worth" jdbcType="VARCHAR"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,ip,
+        system_name,worth,created_at,
+        updated_at
+    </sql>
+
+    <select id="findByIp">
+        SELECT * FROM asset WHERE  ip = #{ip}
+    </select>
+</mapper>
