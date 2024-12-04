@@ -84,11 +84,15 @@ public class VulServiceImpl implements VulService {
         if (StringUtils.hasText(status)) {
             wrappers.eq(Vul::getStatus, status);
         }
-        if(startTime!=null){
+        if(startTime!=null && endTime!=null){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime sTime = LocalDateTime.parse(startTime, formatter);
             LocalDateTime eTime = LocalDateTime.parse(endTime, formatter);
-            wrappers.between(Vul::getCreatedAt, sTime, eTime);
+            wrappers.and(wrapper -> wrapper
+                    .between(Vul::getCreatedAt, sTime, eTime)
+                    .or()
+                    .between(Vul::getUpdatedAt, sTime, eTime)
+            );
         }
         Page<VulDto> vulPage =vulMapper.selectJoinPage(new Page<>(pageNum, pageSize), VulDto.class,  wrappers);
 
